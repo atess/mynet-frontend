@@ -4,8 +4,8 @@
     <a mat-button (click)="showDetail(null)">Add New</a>
   </div>
 
-  <ng-container *ngIf="dataSource.addressesSubject$.getValue().length > 0; else notFound">
-    <mat-table class="persons-table mat-elevation-z8" [dataSource]="dataSource">
+  <div class="mat-elevation-z8" *ngIf="dataSource.addressesSubject$.getValue().length > 0; else notFound">
+    <mat-table class="address-table" [dataSource]="dataSource">
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
         <mat-cell *matCellDef="let address">{{address.address}}</mat-cell>
@@ -50,6 +50,6 @@
                    (page)="dataSource.loadAddresses(personId, $event.pageIndex + 1)"
                    [pageSize]="pagination?.per_page">
     </mat-paginator>
-  </ng-container>
+  </div>
   <ng-template #notFound>Address not found.</ng-template>
 </ng-container>

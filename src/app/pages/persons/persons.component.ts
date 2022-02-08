@@ -44,11 +44,12 @@ export class PersonsComponent implements OnInit, OnDestroy {
   }
 
   delete(row: Person) {
-    this.personsService.delete(row.id).subscribe(() => {
-      if (typeof this.paginator?.pageIndex === 'number' && this.dataSource) {
-        this.dataSource.loadPersons(this.paginator.pageIndex)
-      }
-    });
+    if (confirm('Are you sure?'))
+      this.personsService.delete(row.id).subscribe(() => {
+        if (typeof this.paginator?.pageIndex === 'number' && this.dataSource) {
+          this.dataSource.loadPersons(this.paginator.pageIndex)
+        }
+      });
   }
 
   ngOnDestroy() {

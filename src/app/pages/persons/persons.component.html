@@ -5,11 +5,12 @@
   </div>
 
 
-  <ng-container *ngIf="dataSource.personsSubject$.getValue().length > 0; else notFound">
-    <mat-table class="persons-table mat-elevation-z8" [dataSource]="dataSource">
-      <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-        <mat-spinner></mat-spinner>
-      </div>
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="dataSource.personsSubject$.getValue().length > 0; else notFound">
+    <mat-table class="persons-table" [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
@@ -18,18 +19,16 @@
 
       <ng-container matColumnDef="birthday">
         <mat-header-cell *matHeaderCellDef>Birthday</mat-header-cell>
-        <mat-cell class="description-cell"
-                  *matCellDef="let person">{{moment(person.birthday).format('LL dddd')}}</mat-cell>
+        <mat-cell *matCellDef="let person">{{moment(person.birthday).format('LL dddd')}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="gender">
         <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
-        <mat-cell class="description-cell"
-                  *matCellDef="let person">{{person.gender}}</mat-cell>
+        <mat-cell *matCellDef="let person">{{person.gender}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-header-cell style="width: 70px" *matHeaderCellDef>#</mat-header-cell>
         <mat-cell style="width: 70px"
                   (click)="$event.stopPropagation()"
                   *matCellDef="let person">
@@ -38,6 +37,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
       <mat-row *matRowDef="let row; columns: displayedColumns"
                class="cursor-pointer"
                matRipple
@@ -51,6 +51,6 @@
                    (page)="dataSource.loadPersons($event.pageIndex + 1)"
                    [pageSize]="pagination?.per_page">
     </mat-paginator>
-  </ng-container>
+  </div>
   <ng-template #notFound>Person not found.</ng-template>
 </ng-container>

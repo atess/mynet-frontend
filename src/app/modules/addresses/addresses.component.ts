@@ -35,6 +35,9 @@ export class AddressesComponent implements OnInit, OnDestroy, OnChanges {
               private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+  }
+
+  init() {
     if (this.personId) {
       this.dataSource = new AddressesDataSource(this.addressesService);
       this.dataSource.loadAddresses(this.personId, 1);
@@ -50,6 +53,7 @@ export class AddressesComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.hasOwnProperty('personId')) {
       this.personId = changes['personId'].currentValue;
+      this.init();
     }
   }
 
@@ -66,18 +70,20 @@ export class AddressesComponent implements OnInit, OnDestroy, OnChanges {
     dialogRef.afterClosed()
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(reload => {
-      if (reload && this.personId && typeof this.paginator?.pageIndex === 'number' && this.dataSource) {
-        this.dataSource.loadAddresses(this.personId, this.paginator.pageIndex)
+      if (reload && this.personId && this.dataSource) {
+        let pageIndex = typeof this.paginator?.pageIndex === 'number' ? this.paginator.pageIndex : 0;
+        this.dataSource.loadAddresses(this.personId, pageIndex)
       }
     });
   }
 
   delete(row: Person) {
-    this.addressesService.delete(row.id).subscribe(() => {
-      if (this.personId && typeof this.paginator?.pageIndex === 'number' && this.dataSource) {
-        this.dataSource.loadAddresses(this.personId, this.paginator.pageIndex)
-      }
-    });
+    if (confirm('Are you sure?'))
+      this.addressesService.delete(row.id).subscribe(() => {
+        if (this.personId && typeof this.paginator?.pageIndex === 'number' && this.dataSource) {
+          this.dataSource.loadAddresses(this.personId, this.paginator.pageIndex)
+        }
+      });
   }
 
   ngOnDestroy() {
