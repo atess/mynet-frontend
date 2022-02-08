@@ -4,11 +4,6 @@
     <a mat-button routerLink="/persons/add">Add New</a>
   </div>
 
-
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
-
   <div class="mat-elevation-z8" *ngIf="dataSource.personsSubject$.getValue().length > 0; else notFound">
     <mat-table class="persons-table" [dataSource]="dataSource">
 
@@ -48,7 +43,7 @@
                    [length]="pagination?.total"
                    [pageIndex]="pagination?.current_page"
                    [showFirstLastButtons]="true"
-                   (page)="dataSource.loadPersons($event.pageIndex + 1)"
+                   (page)="dataSource.loadPersons($event.pageIndex)"
                    [pageSize]="pagination?.per_page">
     </mat-paginator>
   </div>

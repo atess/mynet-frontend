@@ -24,7 +24,7 @@ export class PersonDataSource implements DataSource<Person> {
   loadPersons(pageIndex: number) {
     this.loadingSubject$.next(true);
 
-    this.personsService.get(pageIndex)
+    this.personsService.get(pageIndex + 1)
       .pipe(
         catchError(() => of({
           data: {
@@ -43,7 +43,9 @@ export class PersonDataSource implements DataSource<Person> {
           Object.assign({}, persons?.data.pagination, {
             current_page: persons?.data.pagination.current_page - 1
           })
-        )
+        );
+
+        this.loadingSubject$.next(false);
       });
   }
 }

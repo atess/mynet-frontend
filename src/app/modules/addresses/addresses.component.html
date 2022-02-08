@@ -47,7 +47,7 @@
                    [length]="pagination?.total"
                    [pageIndex]="pagination?.current_page"
                    [showFirstLastButtons]="true"
-                   (page)="dataSource.loadAddresses(personId, $event.pageIndex + 1)"
+                   (page)="dataSource.loadAddresses(personId, $event.pageIndex)"
                    [pageSize]="pagination?.per_page">
     </mat-paginator>
   </div>

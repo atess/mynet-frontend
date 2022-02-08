@@ -40,7 +40,7 @@ export class AddressesComponent implements OnInit, OnDestroy, OnChanges {
   init() {
     if (this.personId) {
       this.dataSource = new AddressesDataSource(this.addressesService);
-      this.dataSource.loadAddresses(this.personId, 1);
+      this.dataSource.loadAddresses(this.personId, 0);
       this.dataSource.pagination$
         .pipe(takeUntil(this.destroySubject$))
         .subscribe(pagination => {

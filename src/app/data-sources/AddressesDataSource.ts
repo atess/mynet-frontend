@@ -24,7 +24,7 @@ export class AddressesDataSource implements DataSource<Address> {
   loadAddresses(personId: number, pageIndex: number) {
     this.loadingSubject$.next(true);
 
-    this.addressesService.get(personId, pageIndex)
+    this.addressesService.get(personId, pageIndex + 1)
       .pipe(
         catchError(() => of({
           data: {
@@ -43,7 +43,9 @@ export class AddressesDataSource implements DataSource<Address> {
           Object.assign({}, addresses?.data.pagination, {
             current_page: addresses?.data.pagination.current_page - 1
           })
-        )
+        );
+
+        this.loadingSubject$.next(false);
       });
   }
 }

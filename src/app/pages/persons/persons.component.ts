@@ -30,7 +30,7 @@ export class PersonsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataSource = new PersonDataSource(this.personsService);
-    this.dataSource.loadPersons(1);
+    this.dataSource.loadPersons(0);
     this.dataSource.pagination$
       .pipe(takeUntil(this.destroySubject$))
       .subscribe(pagination => {
