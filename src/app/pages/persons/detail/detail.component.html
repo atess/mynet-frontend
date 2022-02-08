@@ -1,0 +1,41 @@
+<div fxFlex fxLayout="column">
+  <div fxFlex="100" fxLayoutAlign="start center" class="mb-3">
+    <a mat-icon-button routerLink="/persons"><mat-icon>chevron_left</mat-icon></a>
+    <h2 class="mb-0" *ngIf="!id">Add Person</h2>
+    <h2 class="mb-0" *ngIf="id">Update Person</h2>
+  </div>
+
+  <form *ngIf="form" [formGroup]="form"
+        (submit)="submit()"
+        fxFlex fxLayout="column">
+    <div fxFlex fxLayout="row" fxLayoutGap="10px">
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="50">
+        <mat-label>Birthday</mat-label>
+        <input matInput readonly formControlName="birthday" [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-radio-group formControlName="gender"
+                     fxFlex fxLayoutGap="15px"
+                     aria-label="Select an option">
+      <mat-radio-button value="male">Male</mat-radio-button>
+      <mat-radio-button value="female">Female</mat-radio-button>
+    </mat-radio-group>
+
+    <div align="end">
+      <button mat-stroked-button [disabled]="form.invalid || (loading$ | async)" *ngIf="!id">Add</button>
+      <button mat-stroked-button [disabled]="form.invalid || (loading$ | async)" *ngIf="id">Update</button>
+    </div>
+  </form>
+
+  <mat-divider fxFlex="100" class="my-3"></mat-divider>
+
+  <app-addresses *ngIf="id" fxFlex="100" [personId]="id"></app-addresses>
+</div>

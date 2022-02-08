@@ -1,0 +1,10 @@
+:host {
+  font-size: 12px;
+
+  .component-snack-bar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

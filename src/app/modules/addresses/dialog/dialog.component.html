@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>
+  <ng-container *ngIf="!data.address">Add New Address</ng-container>
+  <ng-container *ngIf="data.address">Update Address</ng-container>
+</h2>
+<mat-dialog-content>
+  <form *ngIf="form" [formGroup]="form" fxFlex fxLayout="column">
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Address</mat-label>
+      <input matInput name="address" type="text" formControlName="address">
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Post Code</mat-label>
+      <input matInput name="post_code" type="text" formControlName="post_code">
+      <mat-hint>5 characters</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>City</mat-label>
+      <input matInput name="city_name" type="text" formControlName="city_name">
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Country</mat-label>
+      <input matInput name="country_name" type="text" formControlName="country_name">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-stroked-button
+          (click)="submit()"
+          [disabled]="form?.invalid">
+    <ng-container *ngIf="!data.address">Add</ng-container>
+    <ng-container *ngIf="data.address">Update</ng-container>
+  </button>
+</mat-dialog-actions>
